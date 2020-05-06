@@ -35,7 +35,7 @@ Partial Class frmPartidos
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.lsvPartidosJugados = New System.Windows.Forms.ListView()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
@@ -159,14 +159,14 @@ Partial Class frmPartidos
         Me.Button1.Text = "Registrar"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'ListView1
+        'lsvPartidosJugados
         '
-        Me.ListView1.HideSelection = False
-        Me.ListView1.Location = New System.Drawing.Point(10, 180)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(440, 125)
-        Me.ListView1.TabIndex = 13
-        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.lsvPartidosJugados.HideSelection = False
+        Me.lsvPartidosJugados.Location = New System.Drawing.Point(10, 180)
+        Me.lsvPartidosJugados.Name = "lsvPartidosJugados"
+        Me.lsvPartidosJugados.Size = New System.Drawing.Size(440, 125)
+        Me.lsvPartidosJugados.TabIndex = 13
+        Me.lsvPartidosJugados.UseCompatibleStateImageBehavior = False
         '
         'TextBox1
         '
@@ -189,7 +189,7 @@ Partial Class frmPartidos
         Me.ClientSize = New System.Drawing.Size(464, 311)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.ListView1)
+        Me.Controls.Add(Me.lsvPartidosJugados)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.RadioButton3)
         Me.Controls.Add(Me.RadioButton2)
@@ -223,7 +223,7 @@ Partial Class frmPartidos
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents RadioButton3 As RadioButton
     Friend WithEvents Button1 As Button
-    Friend WithEvents ListView1 As ListView
+    Friend WithEvents lsvPartidosJugados As ListView
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents TextBox2 As TextBox
 End Class
