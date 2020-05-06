@@ -1,0 +1,4 @@
+.gitignore
+.vs/**
+TP_01/bin/Debug/**
+TP_01/obj/Debug/**
