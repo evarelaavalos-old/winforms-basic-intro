@@ -22,142 +22,143 @@ Partial Class frmPartidos
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.dtpFechaPartido = New System.Windows.Forms.DateTimePicker()
+        Me.lblFecha = New System.Windows.Forms.Label()
+        Me.lblEquipLocal = New System.Windows.Forms.Label()
+        Me.lblEquipVisit = New System.Windows.Forms.Label()
+        Me.lblFinalizacion = New System.Windows.Forms.Label()
+        Me.cmbEquipLocal = New System.Windows.Forms.ComboBox()
+        Me.cmbEquipVisit = New System.Windows.Forms.ComboBox()
+        Me.lblGolesLocal = New System.Windows.Forms.Label()
+        Me.lblGolesVisit = New System.Windows.Forms.Label()
+        Me.rbNormal = New System.Windows.Forms.RadioButton()
+        Me.rbSuspIncidentes = New System.Windows.Forms.RadioButton()
+        Me.rbSuspClima = New System.Windows.Forms.RadioButton()
+        Me.btnRegistrar = New System.Windows.Forms.Button()
         Me.lsvPartidosJugados = New System.Windows.Forms.ListView()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.txtGolesLocal = New System.Windows.Forms.TextBox()
+        Me.txtGolesVisit = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
-        'DateTimePicker1
+        'dtpFechaPartido
         '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(116, 24)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(150, 20)
-        Me.DateTimePicker1.TabIndex = 0
+        Me.dtpFechaPartido.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpFechaPartido.Location = New System.Drawing.Point(116, 24)
+        Me.dtpFechaPartido.Name = "dtpFechaPartido"
+        Me.dtpFechaPartido.Size = New System.Drawing.Size(100, 20)
+        Me.dtpFechaPartido.TabIndex = 0
         '
-        'Label1
+        'lblFecha
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(70, 30)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(40, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Fecha:"
+        Me.lblFecha.AutoSize = True
+        Me.lblFecha.Location = New System.Drawing.Point(70, 30)
+        Me.lblFecha.Name = "lblFecha"
+        Me.lblFecha.Size = New System.Drawing.Size(40, 13)
+        Me.lblFecha.TabIndex = 1
+        Me.lblFecha.Text = "Fecha:"
         '
-        'Label2
+        'lblEquipLocal
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(38, 60)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(72, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Equipo Local:"
+        Me.lblEquipLocal.AutoSize = True
+        Me.lblEquipLocal.Location = New System.Drawing.Point(38, 60)
+        Me.lblEquipLocal.Name = "lblEquipLocal"
+        Me.lblEquipLocal.Size = New System.Drawing.Size(72, 13)
+        Me.lblEquipLocal.TabIndex = 2
+        Me.lblEquipLocal.Text = "Equipo Local:"
         '
-        'Label3
+        'lblEquipVisit
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(24, 90)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(86, 13)
-        Me.Label3.TabIndex = 3
-        Me.Label3.Text = "Equipo Visitante:"
+        Me.lblEquipVisit.AutoSize = True
+        Me.lblEquipVisit.Location = New System.Drawing.Point(24, 90)
+        Me.lblEquipVisit.Name = "lblEquipVisit"
+        Me.lblEquipVisit.Size = New System.Drawing.Size(86, 13)
+        Me.lblEquipVisit.TabIndex = 3
+        Me.lblEquipVisit.Text = "Equipo Visitante:"
         '
-        'Label4
+        'lblFinalizacion
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(45, 120)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(65, 13)
-        Me.Label4.TabIndex = 4
-        Me.Label4.Text = "Finalización:"
+        Me.lblFinalizacion.AutoSize = True
+        Me.lblFinalizacion.Location = New System.Drawing.Point(45, 120)
+        Me.lblFinalizacion.Name = "lblFinalizacion"
+        Me.lblFinalizacion.Size = New System.Drawing.Size(65, 13)
+        Me.lblFinalizacion.TabIndex = 4
+        Me.lblFinalizacion.Text = "Finalización:"
         '
-        'ComboBox1
+        'cmbEquipLocal
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(116, 52)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(175, 21)
-        Me.ComboBox1.TabIndex = 5
+        Me.cmbEquipLocal.FormattingEnabled = True
+        Me.cmbEquipLocal.Location = New System.Drawing.Point(116, 52)
+        Me.cmbEquipLocal.Name = "cmbEquipLocal"
+        Me.cmbEquipLocal.Size = New System.Drawing.Size(175, 21)
+        Me.cmbEquipLocal.TabIndex = 5
         '
-        'ComboBox2
+        'cmbEquipVisit
         '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(116, 82)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(175, 21)
-        Me.ComboBox2.TabIndex = 6
+        Me.cmbEquipVisit.FormattingEnabled = True
+        Me.cmbEquipVisit.Location = New System.Drawing.Point(116, 82)
+        Me.cmbEquipVisit.Name = "cmbEquipVisit"
+        Me.cmbEquipVisit.Size = New System.Drawing.Size(175, 21)
+        Me.cmbEquipVisit.TabIndex = 6
         '
-        'Label5
+        'lblGolesLocal
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(300, 60)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(37, 13)
-        Me.Label5.TabIndex = 7
-        Me.Label5.Text = "Goles:"
+        Me.lblGolesLocal.AutoSize = True
+        Me.lblGolesLocal.Location = New System.Drawing.Point(300, 60)
+        Me.lblGolesLocal.Name = "lblGolesLocal"
+        Me.lblGolesLocal.Size = New System.Drawing.Size(37, 13)
+        Me.lblGolesLocal.TabIndex = 7
+        Me.lblGolesLocal.Text = "Goles:"
         '
-        'Label6
+        'lblGolesVisit
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(300, 90)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(37, 13)
-        Me.Label6.TabIndex = 8
-        Me.Label6.Text = "Goles:"
+        Me.lblGolesVisit.AutoSize = True
+        Me.lblGolesVisit.Location = New System.Drawing.Point(300, 90)
+        Me.lblGolesVisit.Name = "lblGolesVisit"
+        Me.lblGolesVisit.Size = New System.Drawing.Size(37, 13)
+        Me.lblGolesVisit.TabIndex = 8
+        Me.lblGolesVisit.Text = "Goles:"
         '
-        'RadioButton1
+        'rbNormal
         '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Location = New System.Drawing.Point(116, 118)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(58, 17)
-        Me.RadioButton1.TabIndex = 9
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Normal"
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.rbNormal.AutoSize = True
+        Me.rbNormal.Location = New System.Drawing.Point(116, 118)
+        Me.rbNormal.Name = "rbNormal"
+        Me.rbNormal.Size = New System.Drawing.Size(58, 17)
+        Me.rbNormal.TabIndex = 9
+        Me.rbNormal.TabStop = True
+        Me.rbNormal.Text = "Normal"
+        Me.rbNormal.UseVisualStyleBackColor = True
         '
-        'RadioButton2
+        'rbSuspIncidentes
         '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(180, 118)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(104, 17)
-        Me.RadioButton2.TabIndex = 10
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Susp. Incidentes"
-        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.rbSuspIncidentes.AutoSize = True
+        Me.rbSuspIncidentes.Location = New System.Drawing.Point(180, 118)
+        Me.rbSuspIncidentes.Name = "rbSuspIncidentes"
+        Me.rbSuspIncidentes.Size = New System.Drawing.Size(104, 17)
+        Me.rbSuspIncidentes.TabIndex = 10
+        Me.rbSuspIncidentes.TabStop = True
+        Me.rbSuspIncidentes.Text = "Susp. Incidentes"
+        Me.rbSuspIncidentes.UseVisualStyleBackColor = True
         '
-        'RadioButton3
+        'rbSuspClima
         '
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.Location = New System.Drawing.Point(290, 118)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(80, 17)
-        Me.RadioButton3.TabIndex = 11
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "Susp. Clima"
-        Me.RadioButton3.UseVisualStyleBackColor = True
+        Me.rbSuspClima.AutoSize = True
+        Me.rbSuspClima.Location = New System.Drawing.Point(290, 118)
+        Me.rbSuspClima.Name = "rbSuspClima"
+        Me.rbSuspClima.Size = New System.Drawing.Size(80, 17)
+        Me.rbSuspClima.TabIndex = 11
+        Me.rbSuspClima.TabStop = True
+        Me.rbSuspClima.Text = "Susp. Clima"
+        Me.rbSuspClima.UseVisualStyleBackColor = True
         '
-        'Button1
+        'btnRegistrar
         '
-        Me.Button1.Location = New System.Drawing.Point(204, 150)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 12
-        Me.Button1.Text = "Registrar"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnRegistrar.Location = New System.Drawing.Point(204, 150)
+        Me.btnRegistrar.Name = "btnRegistrar"
+        Me.btnRegistrar.Size = New System.Drawing.Size(75, 23)
+        Me.btnRegistrar.TabIndex = 12
+        Me.btnRegistrar.Text = "Registrar"
+        Me.btnRegistrar.UseVisualStyleBackColor = True
         '
         'lsvPartidosJugados
         '
@@ -168,41 +169,41 @@ Partial Class frmPartidos
         Me.lsvPartidosJugados.TabIndex = 13
         Me.lsvPartidosJugados.UseCompatibleStateImageBehavior = False
         '
-        'TextBox1
+        'txtGolesLocal
         '
-        Me.TextBox1.Location = New System.Drawing.Point(343, 52)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(50, 20)
-        Me.TextBox1.TabIndex = 14
+        Me.txtGolesLocal.Location = New System.Drawing.Point(343, 52)
+        Me.txtGolesLocal.Name = "txtGolesLocal"
+        Me.txtGolesLocal.Size = New System.Drawing.Size(50, 20)
+        Me.txtGolesLocal.TabIndex = 14
         '
-        'TextBox2
+        'txtGolesVisit
         '
-        Me.TextBox2.Location = New System.Drawing.Point(343, 83)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(50, 20)
-        Me.TextBox2.TabIndex = 15
+        Me.txtGolesVisit.Location = New System.Drawing.Point(343, 83)
+        Me.txtGolesVisit.Name = "txtGolesVisit"
+        Me.txtGolesVisit.Size = New System.Drawing.Size(50, 20)
+        Me.txtGolesVisit.TabIndex = 15
         '
         'frmPartidos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(464, 311)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txtGolesVisit)
+        Me.Controls.Add(Me.txtGolesLocal)
         Me.Controls.Add(Me.lsvPartidosJugados)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.RadioButton3)
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.ComboBox2)
-        Me.Controls.Add(Me.ComboBox1)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.DateTimePicker1)
+        Me.Controls.Add(Me.btnRegistrar)
+        Me.Controls.Add(Me.rbSuspClima)
+        Me.Controls.Add(Me.rbSuspIncidentes)
+        Me.Controls.Add(Me.rbNormal)
+        Me.Controls.Add(Me.lblGolesVisit)
+        Me.Controls.Add(Me.lblGolesLocal)
+        Me.Controls.Add(Me.cmbEquipVisit)
+        Me.Controls.Add(Me.cmbEquipLocal)
+        Me.Controls.Add(Me.lblFinalizacion)
+        Me.Controls.Add(Me.lblEquipVisit)
+        Me.Controls.Add(Me.lblEquipLocal)
+        Me.Controls.Add(Me.lblFecha)
+        Me.Controls.Add(Me.dtpFechaPartido)
         Me.Name = "frmPartidos"
         Me.Text = "Partidos del Torneo"
         Me.ResumeLayout(False)
@@ -210,20 +211,20 @@ Partial Class frmPartidos
 
     End Sub
 
-    Friend WithEvents DateTimePicker1 As DateTimePicker
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
-    Friend WithEvents RadioButton3 As RadioButton
-    Friend WithEvents Button1 As Button
+    Friend WithEvents dtpFechaPartido As DateTimePicker
+    Friend WithEvents lblFecha As Label
+    Friend WithEvents lblEquipLocal As Label
+    Friend WithEvents lblEquipVisit As Label
+    Friend WithEvents lblFinalizacion As Label
+    Friend WithEvents cmbEquipLocal As ComboBox
+    Friend WithEvents cmbEquipVisit As ComboBox
+    Friend WithEvents lblGolesLocal As Label
+    Friend WithEvents lblGolesVisit As Label
+    Friend WithEvents rbNormal As RadioButton
+    Friend WithEvents rbSuspIncidentes As RadioButton
+    Friend WithEvents rbSuspClima As RadioButton
+    Friend WithEvents btnRegistrar As Button
     Friend WithEvents lsvPartidosJugados As ListView
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents txtGolesLocal As TextBox
+    Friend WithEvents txtGolesVisit As TextBox
 End Class

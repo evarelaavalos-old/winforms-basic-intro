@@ -1,7 +1,4 @@
 ﻿Public Class frmPartidos
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
-    End Sub
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Configuracion de la lista
@@ -15,5 +12,9 @@
         lsvPartidosJugados.Columns.Add("Goles L.", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Goles V.", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Finalizacion", 80, HorizontalAlignment.Left)
+    End Sub
+
+    Private Sub btnRegistrar_Click(sender As Object, e As EventArgs) Handles btnRegistrar.Click
+
     End Sub
 End Class
