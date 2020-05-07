@@ -1,6 +1,24 @@
 ﻿Public Class frmPartidos
 
+    Private Enum EstadoFormulario
+        Estado_Invalido
+        Goles_Local_Es_Vacio
+        Goles_Local_No_Numerico
+        Goles_Local_Negativo
+        Goles_Visitante_Es_Vacio
+        Goles_Visitante_No_Numerico
+        Goles_Visitante_Negativo
+        No_Selecciono_Finalizacion
+        Equipos_Duplicados
+        Equipos_Enfrentados_Previamente
+        Correcto
+    End Enum
+
+    Private EstadoActualFormulario As EstadoFormulario
+
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        EstadoActualFormulario = EstadoFormulario.Estado_Invalido
+
         'carga los nombres de los equipos en los ComboBox
         cmbEquipLocal.Items.Add("Aldosivi")
         cmbEquipLocal.Items.Add("Argentinos")
@@ -82,7 +100,7 @@
 
     End Sub
 
-    Private Sub cargarEjemplosLista()
+    Private Sub CargarEjemplosLista()
         'Ejemplo 1
         lsvPartidosJugados.Items.Add("04/05/2020")
         lsvPartidosJugados.Items(0).SubItems.Add("River Plate")
