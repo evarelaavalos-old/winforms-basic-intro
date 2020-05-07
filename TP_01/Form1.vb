@@ -14,11 +14,7 @@
         Correcto
     End Enum
 
-    Private EstadoActualFormulario As EstadoFormulario
-
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        EstadoActualFormulario = EstadoFormulario.Estado_Invalido
-
         'carga los nombres de los equipos en los ComboBox
         cmbEquipLocal.Items.Add("Aldosivi")
         cmbEquipLocal.Items.Add("Argentinos")
@@ -45,30 +41,30 @@
         cmbEquipLocal.Items.Add("Union de Santa Fe")
         cmbEquipLocal.Items.Add("Velez Sarsfield")
 
-        cmbEquipVisit.Items.Add("Aldosivi")
-        cmbEquipVisit.Items.Add("Argentinos")
-        cmbEquipVisit.Items.Add("Arsenal")
-        cmbEquipVisit.Items.Add("Atletico Tucuman")
-        cmbEquipVisit.Items.Add("Banfield")
-        cmbEquipVisit.Items.Add("Boca Juniors")
-        cmbEquipVisit.Items.Add("Central Cordoba")
-        cmbEquipVisit.Items.Add("Colon")
-        cmbEquipVisit.Items.Add("Defensa y Justicia")
-        cmbEquipVisit.Items.Add("Estudiantes")
-        cmbEquipVisit.Items.Add("Gimnasia y Esgrima")
-        cmbEquipVisit.Items.Add("Godoy Cruz")
-        cmbEquipVisit.Items.Add("Huracán")
-        cmbEquipVisit.Items.Add("Independiente")
-        cmbEquipVisit.Items.Add("Lanus")
-        cmbEquipVisit.Items.Add("Newell's Old Boys")
-        cmbEquipVisit.Items.Add("Patronato")
-        cmbEquipVisit.Items.Add("Racing")
-        cmbEquipVisit.Items.Add("River Plate")
-        cmbEquipVisit.Items.Add("Rosario Central")
-        cmbEquipVisit.Items.Add("San Lorenzo")
-        cmbEquipVisit.Items.Add("Talleres")
-        cmbEquipVisit.Items.Add("Union de Santa Fe")
-        cmbEquipVisit.Items.Add("Velez Sarsfield")
+        cmbEquipVisitante.Items.Add("Aldosivi")
+        cmbEquipVisitante.Items.Add("Argentinos")
+        cmbEquipVisitante.Items.Add("Arsenal")
+        cmbEquipVisitante.Items.Add("Atletico Tucuman")
+        cmbEquipVisitante.Items.Add("Banfield")
+        cmbEquipVisitante.Items.Add("Boca Juniors")
+        cmbEquipVisitante.Items.Add("Central Cordoba")
+        cmbEquipVisitante.Items.Add("Colon")
+        cmbEquipVisitante.Items.Add("Defensa y Justicia")
+        cmbEquipVisitante.Items.Add("Estudiantes")
+        cmbEquipVisitante.Items.Add("Gimnasia y Esgrima")
+        cmbEquipVisitante.Items.Add("Godoy Cruz")
+        cmbEquipVisitante.Items.Add("Huracán")
+        cmbEquipVisitante.Items.Add("Independiente")
+        cmbEquipVisitante.Items.Add("Lanus")
+        cmbEquipVisitante.Items.Add("Newell's Old Boys")
+        cmbEquipVisitante.Items.Add("Patronato")
+        cmbEquipVisitante.Items.Add("Racing")
+        cmbEquipVisitante.Items.Add("River Plate")
+        cmbEquipVisitante.Items.Add("Rosario Central")
+        cmbEquipVisitante.Items.Add("San Lorenzo")
+        cmbEquipVisitante.Items.Add("Talleres")
+        cmbEquipVisitante.Items.Add("Union de Santa Fe")
+        cmbEquipVisitante.Items.Add("Velez Sarsfield")
 
         'configuracion de la lista
         lsvPartidosJugados.View = View.Details
@@ -87,18 +83,49 @@
 
         'El usuario no puede tipear equipos personalizados
         cmbEquipLocal.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbEquipVisit.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbEquipVisitante.DropDownStyle = ComboBoxStyle.DropDownList
 
         'No se permite escribir más de dos digitos para el numero de goles
         txtGolesLocal.MaxLength = 2
-        txtGolesVisit.MaxLength = 2
+        txtGolesVisitante.MaxLength = 2
 
-        cargarEjemplosLista()
+        CargarEjemplosLista()
     End Sub
 
     Private Sub btnRegistrar_Click(sender As Object, e As EventArgs) Handles btnRegistrar.Click
-
+        Dim EstadoActualFormulario As EstadoFormulario = CheckearEstadoFormulario()
     End Sub
+
+    Private Function CheckearEstadoFormulario() As EstadoFormulario
+        Dim golesLocal As Short
+        Dim golesVisitante As Short
+
+        If txtGolesLocal.Text.Trim = String.Empty Then
+            Return EstadoFormulario.Goles_Local_Es_Vacio
+        ElseIf Not Short.TryParse(txtGolesLocal.Text.Trim, golesLocal) Then
+            Return EstadoFormulario.Goles_Local_No_Numerico
+        ElseIf golesLocal < 0 Then
+            Return EstadoFormulario.Goles_Local_Negativo
+        ElseIf txtGolesVisitante.Text.Trim = String.Empty Then
+            Return EstadoFormulario.Goles_Visitante_Es_Vacio
+        ElseIf Not Short.TryParse(txtGolesVisitante.Text.Trim, golesVisitante) Then
+            Return EstadoFormulario.Goles_Visitante_No_Numerico
+        ElseIf golesVisitante < 0 Then
+            Return EstadoFormulario.Goles_Visitante_Negativo
+        ElseIf False Then
+            'TODO crear una funcion SeHaSeleccionadoFinalizacion
+            Return EstadoFormulario.No_Selecciono_Finalizacion
+        ElseIf False Then
+            'TODO crear una funcion que determine ambos combobox contienen el mismo equipo
+            Return EstadoFormulario.Equipos_Duplicados
+        ElseIf False Then
+            'TODO crear una funcion que determine, de los equipos que estan en la planilla,
+            'si ya se habian enfrentado previamente
+            Return EstadoFormulario.Equipos_Enfrentados_Previamente
+        Else
+            Return EstadoFormulario.Correcto
+        End If
+    End Function
 
     Private Sub CargarEjemplosLista()
         'Ejemplo 1

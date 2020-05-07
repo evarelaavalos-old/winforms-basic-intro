@@ -25,19 +25,19 @@ Partial Class frmPartidos
         Me.dtpFechaPartido = New System.Windows.Forms.DateTimePicker()
         Me.lblFecha = New System.Windows.Forms.Label()
         Me.lblEquipLocal = New System.Windows.Forms.Label()
-        Me.lblEquipVisit = New System.Windows.Forms.Label()
+        Me.lblEquipVisitante = New System.Windows.Forms.Label()
         Me.lblFinalizacion = New System.Windows.Forms.Label()
         Me.cmbEquipLocal = New System.Windows.Forms.ComboBox()
-        Me.cmbEquipVisit = New System.Windows.Forms.ComboBox()
+        Me.cmbEquipVisitante = New System.Windows.Forms.ComboBox()
         Me.lblGolesLocal = New System.Windows.Forms.Label()
-        Me.lblGolesVisit = New System.Windows.Forms.Label()
+        Me.lblGolesVisitante = New System.Windows.Forms.Label()
         Me.rbNormal = New System.Windows.Forms.RadioButton()
         Me.rbSuspIncidentes = New System.Windows.Forms.RadioButton()
         Me.rbSuspClima = New System.Windows.Forms.RadioButton()
         Me.btnRegistrar = New System.Windows.Forms.Button()
         Me.lsvPartidosJugados = New System.Windows.Forms.ListView()
         Me.txtGolesLocal = New System.Windows.Forms.TextBox()
-        Me.txtGolesVisit = New System.Windows.Forms.TextBox()
+        Me.txtGolesVisitante = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'dtpFechaPartido
@@ -66,14 +66,14 @@ Partial Class frmPartidos
         Me.lblEquipLocal.TabIndex = 2
         Me.lblEquipLocal.Text = "Equipo Local:"
         '
-        'lblEquipVisit
+        'lblEquipVisitante
         '
-        Me.lblEquipVisit.AutoSize = True
-        Me.lblEquipVisit.Location = New System.Drawing.Point(24, 90)
-        Me.lblEquipVisit.Name = "lblEquipVisit"
-        Me.lblEquipVisit.Size = New System.Drawing.Size(86, 13)
-        Me.lblEquipVisit.TabIndex = 3
-        Me.lblEquipVisit.Text = "Equipo Visitante:"
+        Me.lblEquipVisitante.AutoSize = True
+        Me.lblEquipVisitante.Location = New System.Drawing.Point(24, 90)
+        Me.lblEquipVisitante.Name = "lblEquipVisitante"
+        Me.lblEquipVisitante.Size = New System.Drawing.Size(86, 13)
+        Me.lblEquipVisitante.TabIndex = 3
+        Me.lblEquipVisitante.Text = "Equipo Visitante:"
         '
         'lblFinalizacion
         '
@@ -92,13 +92,13 @@ Partial Class frmPartidos
         Me.cmbEquipLocal.Size = New System.Drawing.Size(175, 21)
         Me.cmbEquipLocal.TabIndex = 5
         '
-        'cmbEquipVisit
+        'cmbEquipVisitante
         '
-        Me.cmbEquipVisit.FormattingEnabled = True
-        Me.cmbEquipVisit.Location = New System.Drawing.Point(116, 82)
-        Me.cmbEquipVisit.Name = "cmbEquipVisit"
-        Me.cmbEquipVisit.Size = New System.Drawing.Size(175, 21)
-        Me.cmbEquipVisit.TabIndex = 6
+        Me.cmbEquipVisitante.FormattingEnabled = True
+        Me.cmbEquipVisitante.Location = New System.Drawing.Point(116, 82)
+        Me.cmbEquipVisitante.Name = "cmbEquipVisitante"
+        Me.cmbEquipVisitante.Size = New System.Drawing.Size(175, 21)
+        Me.cmbEquipVisitante.TabIndex = 6
         '
         'lblGolesLocal
         '
@@ -109,14 +109,14 @@ Partial Class frmPartidos
         Me.lblGolesLocal.TabIndex = 7
         Me.lblGolesLocal.Text = "Goles:"
         '
-        'lblGolesVisit
+        'lblGolesVisitante
         '
-        Me.lblGolesVisit.AutoSize = True
-        Me.lblGolesVisit.Location = New System.Drawing.Point(300, 90)
-        Me.lblGolesVisit.Name = "lblGolesVisit"
-        Me.lblGolesVisit.Size = New System.Drawing.Size(37, 13)
-        Me.lblGolesVisit.TabIndex = 8
-        Me.lblGolesVisit.Text = "Goles:"
+        Me.lblGolesVisitante.AutoSize = True
+        Me.lblGolesVisitante.Location = New System.Drawing.Point(300, 90)
+        Me.lblGolesVisitante.Name = "lblGolesVisitante"
+        Me.lblGolesVisitante.Size = New System.Drawing.Size(37, 13)
+        Me.lblGolesVisitante.TabIndex = 8
+        Me.lblGolesVisitante.Text = "Goles:"
         '
         'rbNormal
         '
@@ -176,31 +176,31 @@ Partial Class frmPartidos
         Me.txtGolesLocal.Size = New System.Drawing.Size(50, 20)
         Me.txtGolesLocal.TabIndex = 14
         '
-        'txtGolesVisit
+        'txtGolesVisitante
         '
-        Me.txtGolesVisit.Location = New System.Drawing.Point(343, 83)
-        Me.txtGolesVisit.Name = "txtGolesVisit"
-        Me.txtGolesVisit.Size = New System.Drawing.Size(50, 20)
-        Me.txtGolesVisit.TabIndex = 15
+        Me.txtGolesVisitante.Location = New System.Drawing.Point(343, 83)
+        Me.txtGolesVisitante.Name = "txtGolesVisitante"
+        Me.txtGolesVisitante.Size = New System.Drawing.Size(50, 20)
+        Me.txtGolesVisitante.TabIndex = 15
         '
         'frmPartidos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(464, 311)
-        Me.Controls.Add(Me.txtGolesVisit)
+        Me.Controls.Add(Me.txtGolesVisitante)
         Me.Controls.Add(Me.txtGolesLocal)
         Me.Controls.Add(Me.lsvPartidosJugados)
         Me.Controls.Add(Me.btnRegistrar)
         Me.Controls.Add(Me.rbSuspClima)
         Me.Controls.Add(Me.rbSuspIncidentes)
         Me.Controls.Add(Me.rbNormal)
-        Me.Controls.Add(Me.lblGolesVisit)
+        Me.Controls.Add(Me.lblGolesVisitante)
         Me.Controls.Add(Me.lblGolesLocal)
-        Me.Controls.Add(Me.cmbEquipVisit)
+        Me.Controls.Add(Me.cmbEquipVisitante)
         Me.Controls.Add(Me.cmbEquipLocal)
         Me.Controls.Add(Me.lblFinalizacion)
-        Me.Controls.Add(Me.lblEquipVisit)
+        Me.Controls.Add(Me.lblEquipVisitante)
         Me.Controls.Add(Me.lblEquipLocal)
         Me.Controls.Add(Me.lblFecha)
         Me.Controls.Add(Me.dtpFechaPartido)
@@ -214,17 +214,17 @@ Partial Class frmPartidos
     Friend WithEvents dtpFechaPartido As DateTimePicker
     Friend WithEvents lblFecha As Label
     Friend WithEvents lblEquipLocal As Label
-    Friend WithEvents lblEquipVisit As Label
+    Friend WithEvents lblEquipVisitante As Label
     Friend WithEvents lblFinalizacion As Label
     Friend WithEvents cmbEquipLocal As ComboBox
-    Friend WithEvents cmbEquipVisit As ComboBox
+    Friend WithEvents cmbEquipVisitante As ComboBox
     Friend WithEvents lblGolesLocal As Label
-    Friend WithEvents lblGolesVisit As Label
+    Friend WithEvents lblGolesVisitante As Label
     Friend WithEvents rbNormal As RadioButton
     Friend WithEvents rbSuspIncidentes As RadioButton
     Friend WithEvents rbSuspClima As RadioButton
     Friend WithEvents btnRegistrar As Button
     Friend WithEvents lsvPartidosJugados As ListView
     Friend WithEvents txtGolesLocal As TextBox
-    Friend WithEvents txtGolesVisit As TextBox
+    Friend WithEvents txtGolesVisitante As TextBox
 End Class
