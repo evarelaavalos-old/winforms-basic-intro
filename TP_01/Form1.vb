@@ -94,6 +94,55 @@
 
     Private Sub btnRegistrar_Click(sender As Object, e As EventArgs) Handles btnRegistrar.Click
         Dim EstadoActualFormulario As EstadoFormulario = CheckearEstadoFormulario()
+
+        Select Case EstadoActualFormulario
+            Case EstadoFormulario.Goles_Local_Es_Vacio
+                MessageBox.Show("No ha ingresado un numero en los goles del equipo local." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Goles_Local_No_Numerico
+                MessageBox.Show("El valor ingresado en los goles del equipo local es no numerico." _
+                & " Por favor, ingrese un numero positivo." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Goles_Local_Negativo
+                MessageBox.Show("El valor ingresado en los goles del equipo local es negativo." _
+                & " Por favor, ingrese un numero positivo." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Goles_Visitante_Es_Vacio
+                MessageBox.Show("No ha ingresado un numero en los goles del equipo visitante." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Goles_Visitante_No_Numerico
+                MessageBox.Show("El valor ingresado en los goles del equipo visitante es no numerico." _
+                & " Por favor, ingrese un numero positivo." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Goles_Visitante_Negativo
+                MessageBox.Show("El valor ingresado en los goles del equipo visitante es negativo." _
+                & " Por favor, ingrese un numero positivo." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.No_Selecciono_Finalizacion
+                MessageBox.Show("No ha seleccionado como finalizo el partido." _
+                & " Por favor, seleccione una de las opciones." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Equipos_Duplicados
+                MessageBox.Show("No puede seleccionar el mismo equipo en ambos casilleros." _
+                & " Por favor, seleccione equipos diferentes como local y visitante." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Equipos_Enfrentados_Previamente
+                MessageBox.Show("Estos equipos ya se han enfrentado en otra ocasion. " _
+                & " Por favor, revise la lista de partidos jugados para mas detalles." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Case EstadoFormulario.Correcto
+                MessageBox.Show("El partido se ha registrado exitosamente." _
+                , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Select
     End Sub
 
     Private Function CheckearEstadoFormulario() As EstadoFormulario
@@ -102,26 +151,35 @@
 
         If txtGolesLocal.Text.Trim = String.Empty Then
             Return EstadoFormulario.Goles_Local_Es_Vacio
+
         ElseIf Not Short.TryParse(txtGolesLocal.Text.Trim, golesLocal) Then
             Return EstadoFormulario.Goles_Local_No_Numerico
+
         ElseIf golesLocal < 0 Then
             Return EstadoFormulario.Goles_Local_Negativo
+
         ElseIf txtGolesVisitante.Text.Trim = String.Empty Then
             Return EstadoFormulario.Goles_Visitante_Es_Vacio
+
         ElseIf Not Short.TryParse(txtGolesVisitante.Text.Trim, golesVisitante) Then
             Return EstadoFormulario.Goles_Visitante_No_Numerico
+
         ElseIf golesVisitante < 0 Then
             Return EstadoFormulario.Goles_Visitante_Negativo
+
         ElseIf False Then
             'TODO crear una funcion SeHaSeleccionadoFinalizacion
             Return EstadoFormulario.No_Selecciono_Finalizacion
+
         ElseIf False Then
             'TODO crear una funcion que determine ambos combobox contienen el mismo equipo
             Return EstadoFormulario.Equipos_Duplicados
+
         ElseIf False Then
             'TODO crear una funcion que determine, de los equipos que estan en la planilla,
             'si ya se habian enfrentado previamente
             Return EstadoFormulario.Equipos_Enfrentados_Previamente
+
         Else
             Return EstadoFormulario.Correcto
         End If
