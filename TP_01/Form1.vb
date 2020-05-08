@@ -1,4 +1,5 @@
 ﻿Public Class frmPartidos
+    Private _rutaArchivo As String
 
     Private Enum EstadoFormulario
         Estado_Invalido
@@ -17,6 +18,8 @@
     End Enum
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Ubicacion del archivo desde el cual se cargaran los partidos
+        _rutaArchivo = "~/RegistroPartidosJugados.csv"
 
         'La fecha actual es la maxima fecha a elegir
         dtpFechaPartido.MaxDate = DateTime.Today
@@ -33,6 +36,7 @@
         'configuracion de la lista
         lsvPartidosJugados.View = View.Details
         lsvPartidosJugados.FullRowSelect = True
+        CargarListaDesdeArchivo()
         CargarEjemplosLista()
 
         'columnas de la listview
@@ -102,6 +106,7 @@
 
             Case EstadoFormulario.Correcto
                 EnviarFormularioLista()
+                GuardarDatosEnArchivo()
                 ReiniciarFormulario()
                 MessageBox.Show("El partido se ha registrado exitosamente." _
                 , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -252,6 +257,17 @@
         cmbEquipVisitante.Items.Add("Talleres")
         cmbEquipVisitante.Items.Add("Union de Santa Fe")
         cmbEquipVisitante.Items.Add("Velez Sarsfield")
+    End Sub
+
+    Private Sub CargarListaDesdeArchivo()
+        'TODO crear una subrutina que cargue en la ListView los datos del archivo
+        'Verificar la integridad del archivo
+        'Si no existe crearlo y arrancar con una planilla en blanco
+        'Si existe cargar todos lso datos en la planilla
+    End Sub
+
+    Private Sub GuardarDatosEnArchivo()
+        'TODO crear una subrutina que guarde en el archivo los datos del formulario
     End Sub
 
     Private Sub CargarEjemplosLista()
