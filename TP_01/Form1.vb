@@ -17,62 +17,25 @@
     End Enum
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'carga los nombres de los equipos en los combobox
-        cmbEquipLocal.Items.Add("Aldosivi")
-        cmbEquipLocal.Items.Add("Argentinos")
-        cmbEquipLocal.Items.Add("Arsenal")
-        cmbEquipLocal.Items.Add("Atletico Tucuman")
-        cmbEquipLocal.Items.Add("Banfield")
-        cmbEquipLocal.Items.Add("Boca Juniors")
-        cmbEquipLocal.Items.Add("Central Cordoba")
-        cmbEquipLocal.Items.Add("Colon")
-        cmbEquipLocal.Items.Add("Defensa y Justicia")
-        cmbEquipLocal.Items.Add("Estudiantes")
-        cmbEquipLocal.Items.Add("Gimnasia y Esgrima")
-        cmbEquipLocal.Items.Add("Godoy Cruz")
-        cmbEquipLocal.Items.Add("Huracán")
-        cmbEquipLocal.Items.Add("Independiente")
-        cmbEquipLocal.Items.Add("Lanus")
-        cmbEquipLocal.Items.Add("Newell's Old Boys")
-        cmbEquipLocal.Items.Add("Patronato")
-        cmbEquipLocal.Items.Add("Racing")
-        cmbEquipLocal.Items.Add("River Plate")
-        cmbEquipLocal.Items.Add("Rosario Central")
-        cmbEquipLocal.Items.Add("San Lorenzo")
-        cmbEquipLocal.Items.Add("Talleres")
-        cmbEquipLocal.Items.Add("Union de Santa Fe")
-        cmbEquipLocal.Items.Add("Velez Sarsfield")
 
-        cmbEquipVisitante.Items.Add("Aldosivi")
-        cmbEquipVisitante.Items.Add("Argentinos")
-        cmbEquipVisitante.Items.Add("Arsenal")
-        cmbEquipVisitante.Items.Add("Atletico Tucuman")
-        cmbEquipVisitante.Items.Add("Banfield")
-        cmbEquipVisitante.Items.Add("Boca Juniors")
-        cmbEquipVisitante.Items.Add("Central Cordoba")
-        cmbEquipVisitante.Items.Add("Colon")
-        cmbEquipVisitante.Items.Add("Defensa y Justicia")
-        cmbEquipVisitante.Items.Add("Estudiantes")
-        cmbEquipVisitante.Items.Add("Gimnasia y Esgrima")
-        cmbEquipVisitante.Items.Add("Godoy Cruz")
-        cmbEquipVisitante.Items.Add("Huracán")
-        cmbEquipVisitante.Items.Add("Independiente")
-        cmbEquipVisitante.Items.Add("Lanus")
-        cmbEquipVisitante.Items.Add("Newell's Old Boys")
-        cmbEquipVisitante.Items.Add("Patronato")
-        cmbEquipVisitante.Items.Add("Racing")
-        cmbEquipVisitante.Items.Add("River Plate")
-        cmbEquipVisitante.Items.Add("Rosario Central")
-        cmbEquipVisitante.Items.Add("San Lorenzo")
-        cmbEquipVisitante.Items.Add("Talleres")
-        cmbEquipVisitante.Items.Add("Union de Santa Fe")
-        cmbEquipVisitante.Items.Add("Velez Sarsfield")
+        'La fecha actual es la maxima fecha a elegir
+        dtpFechaPartido.MaxDate = DateTime.Today
+
+        'El usuario no puede tipear equipos personalizados en los combobox
+        cmbEquipLocal.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbEquipVisitante.DropDownStyle = ComboBoxStyle.DropDownList
+        CargarEquiposComboBox()
+
+        'no se permite escribir más de dos digitos para el numero de goles en los textbox
+        txtGolesLocal.MaxLength = 2
+        txtGolesVisitante.MaxLength = 2
 
         'configuracion de la lista
         lsvPartidosJugados.View = View.Details
         lsvPartidosJugados.FullRowSelect = True
+        CargarEjemplosLista()
 
-        'columnas de la lista
+        'columnas de la listview
         lsvPartidosJugados.Columns.Add("Fecha", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Local", 90, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Visitante", 90, HorizontalAlignment.Left)
@@ -80,18 +43,6 @@
         lsvPartidosJugados.Columns.Add("Goles V.", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Finalizacion", 80, HorizontalAlignment.Left)
 
-        'La fecha actual es la maxima fecha a elegir
-        dtpFechaPartido.MaxDate = DateTime.Today
-
-        'El usuario no puede tipear equipos personalizados
-        cmbEquipLocal.DropDownStyle = ComboBoxStyle.DropDownList
-        cmbEquipVisitante.DropDownStyle = ComboBoxStyle.DropDownList
-
-        'No se permite escribir más de dos digitos para el numero de goles
-        txtGolesLocal.MaxLength = 2
-        txtGolesVisitante.MaxLength = 2
-
-        CargarEjemplosLista()
     End Sub
 
     Private Sub btnRegistrar_Click(sender As Object, e As EventArgs) Handles btnRegistrar.Click
@@ -150,6 +101,8 @@
                 , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Case EstadoFormulario.Correcto
+                EnviarFormularioLista()
+                ReiniciarFormulario()
                 MessageBox.Show("El partido se ha registrado exitosamente." _
                 , "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Select
@@ -215,6 +168,91 @@
 
         Return False
     End Function
+
+    Private Sub EnviarFormularioLista()
+        Dim ultimaCol As Integer = lsvPartidosJugados.Items.Count
+
+        lsvPartidosJugados.Items.Add(dtpFechaPartido.Value)
+        lsvPartidosJugados.Items(ultimaCol).SubItems.Add(cmbEquipLocal.Text)
+        lsvPartidosJugados.Items(ultimaCol).SubItems.Add(cmbEquipVisitante.Text)
+        lsvPartidosJugados.Items(ultimaCol).SubItems.Add(txtGolesLocal.Text)
+        lsvPartidosJugados.Items(ultimaCol).SubItems.Add(txtGolesVisitante.Text)
+
+        If rbNormal.Checked Then
+            lsvPartidosJugados.Items(ultimaCol).SubItems.Add(rbNormal.Text)
+
+        ElseIf rbSuspClima.Checked Then
+            lsvPartidosJugados.Items(ultimaCol).SubItems.Add(rbSuspClima.Text)
+
+        ElseIf rbSuspIncidentes.Checked Then
+            lsvPartidosJugados.Items(ultimaCol).SubItems.Add(rbSuspIncidentes.Text)
+        End If
+    End Sub
+
+    Private Sub ReiniciarFormulario()
+        dtpFechaPartido.Value = DateTime.Today
+        cmbEquipLocal.SelectedIndex = -1
+        cmbEquipVisitante.SelectedIndex = -1
+        txtGolesLocal.Clear()
+        txtGolesVisitante.Clear()
+        rbNormal.Checked = False
+        rbSuspClima.Checked = False
+        rbSuspIncidentes.Checked = False
+    End Sub
+
+    Private Sub CargarEquiposComboBox()
+        'equipos de local
+        cmbEquipLocal.Items.Add("Aldosivi")
+        cmbEquipLocal.Items.Add("Argentinos")
+        cmbEquipLocal.Items.Add("Arsenal")
+        cmbEquipLocal.Items.Add("Atletico Tucuman")
+        cmbEquipLocal.Items.Add("Banfield")
+        cmbEquipLocal.Items.Add("Boca Juniors")
+        cmbEquipLocal.Items.Add("Central Cordoba")
+        cmbEquipLocal.Items.Add("Colon")
+        cmbEquipLocal.Items.Add("Defensa y Justicia")
+        cmbEquipLocal.Items.Add("Estudiantes")
+        cmbEquipLocal.Items.Add("Gimnasia y Esgrima")
+        cmbEquipLocal.Items.Add("Godoy Cruz")
+        cmbEquipLocal.Items.Add("Huracán")
+        cmbEquipLocal.Items.Add("Independiente")
+        cmbEquipLocal.Items.Add("Lanus")
+        cmbEquipLocal.Items.Add("Newell's Old Boys")
+        cmbEquipLocal.Items.Add("Patronato")
+        cmbEquipLocal.Items.Add("Racing")
+        cmbEquipLocal.Items.Add("River Plate")
+        cmbEquipLocal.Items.Add("Rosario Central")
+        cmbEquipLocal.Items.Add("San Lorenzo")
+        cmbEquipLocal.Items.Add("Talleres")
+        cmbEquipLocal.Items.Add("Union de Santa Fe")
+        cmbEquipLocal.Items.Add("Velez Sarsfield")
+
+        'equipos de visitante
+        cmbEquipVisitante.Items.Add("Aldosivi")
+        cmbEquipVisitante.Items.Add("Argentinos")
+        cmbEquipVisitante.Items.Add("Arsenal")
+        cmbEquipVisitante.Items.Add("Atletico Tucuman")
+        cmbEquipVisitante.Items.Add("Banfield")
+        cmbEquipVisitante.Items.Add("Boca Juniors")
+        cmbEquipVisitante.Items.Add("Central Cordoba")
+        cmbEquipVisitante.Items.Add("Colon")
+        cmbEquipVisitante.Items.Add("Defensa y Justicia")
+        cmbEquipVisitante.Items.Add("Estudiantes")
+        cmbEquipVisitante.Items.Add("Gimnasia y Esgrima")
+        cmbEquipVisitante.Items.Add("Godoy Cruz")
+        cmbEquipVisitante.Items.Add("Huracán")
+        cmbEquipVisitante.Items.Add("Independiente")
+        cmbEquipVisitante.Items.Add("Lanus")
+        cmbEquipVisitante.Items.Add("Newell's Old Boys")
+        cmbEquipVisitante.Items.Add("Patronato")
+        cmbEquipVisitante.Items.Add("Racing")
+        cmbEquipVisitante.Items.Add("River Plate")
+        cmbEquipVisitante.Items.Add("Rosario Central")
+        cmbEquipVisitante.Items.Add("San Lorenzo")
+        cmbEquipVisitante.Items.Add("Talleres")
+        cmbEquipVisitante.Items.Add("Union de Santa Fe")
+        cmbEquipVisitante.Items.Add("Velez Sarsfield")
+    End Sub
 
     Private Sub CargarEjemplosLista()
         'Ejemplo 1
