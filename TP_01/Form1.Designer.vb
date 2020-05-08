@@ -204,6 +204,7 @@ Partial Class frmPartidos
         Me.Controls.Add(Me.lblEquipLocal)
         Me.Controls.Add(Me.lblFecha)
         Me.Controls.Add(Me.dtpFechaPartido)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "frmPartidos"
         Me.Text = "Partidos del Torneo"
         Me.ResumeLayout(False)
