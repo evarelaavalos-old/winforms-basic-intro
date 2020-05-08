@@ -1,5 +1,8 @@
-﻿Public Class frmPartidos
+﻿Imports System.IO
+
+Public Class frmPartidos
     Private _rutaArchivo As String
+    Private _delimitadorCampo As Char
 
     Private Enum EstadoFormulario
         Estado_Invalido
@@ -19,7 +22,11 @@
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Ubicacion del archivo desde el cual se cargaran los partidos
-        _rutaArchivo = "~/RegistroPartidosJugados.csv"
+        _rutaArchivo = "/RegistroPartidosJugados.csv"
+        _delimitadorCampo = ","
+
+        'posiciona el formulario en el centro de la pantalla
+        Me.CenterToScreen()
 
         'La fecha actual es la maxima fecha a elegir
         dtpFechaPartido.MaxDate = DateTime.Today
@@ -37,7 +44,7 @@
         lsvPartidosJugados.View = View.Details
         lsvPartidosJugados.FullRowSelect = True
         CargarListaDesdeArchivo()
-        CargarEjemplosLista()
+        'CargarEjemplosLista()
 
         'columnas de la listview
         lsvPartidosJugados.Columns.Add("Fecha", 60, HorizontalAlignment.Left)
@@ -205,6 +212,58 @@
         rbSuspIncidentes.Checked = False
     End Sub
 
+    Private Sub CargarListaDesdeArchivo()
+        If File.Exists(_rutaArchivo) Then
+            Dim Archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
+            Dim Lector As StreamReader = New StreamReader(Archivo)
+
+            Dim Linea As String
+            Dim Campos(5) As String
+            Dim NroFilaLista As Integer = lsvPartidosJugados.Items.Count '<- deberia ser 0
+            While Not Lector.EndOfStream
+                Linea = Lector.ReadLine
+                Campos = Linea.Split(",")
+
+                lsvPartidosJugados.Items.Add(Campos(0))
+                lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(1))
+                lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(2))
+                lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(3))
+                lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(4))
+                lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(5))
+
+                NroFilaLista += 1
+            End While
+
+            Lector.Close()
+            Archivo.Close()
+        End If
+    End Sub
+
+    Private Sub GuardarDatosEnArchivo()
+        Dim Archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Append)
+        Dim Grabador As StreamWriter = New StreamWriter(Archivo)
+        Dim LineaAGrabar As String =
+            dtpFechaPartido.Value.ToShortDateString() + _delimitadorCampo _
+            & cmbEquipLocal.Text & _delimitadorCampo _
+            & cmbEquipVisitante.Text & _delimitadorCampo _
+            & txtGolesLocal.Text & _delimitadorCampo _
+            & txtGolesVisitante.Text & _delimitadorCampo
+
+        If rbNormal.Checked Then
+            LineaAGrabar &= rbNormal.Text
+
+        ElseIf rbSuspClima.Checked Then
+            LineaAGrabar &= rbSuspClima.Text
+
+        ElseIf rbSuspIncidentes.Checked Then
+            LineaAGrabar &= rbSuspIncidentes.Text
+        End If
+
+        Grabador.WriteLine(LineaAGrabar)
+        Grabador.Close()
+        Archivo.Close()
+    End Sub
+
     Private Sub CargarEquiposComboBox()
         'equipos de local
         cmbEquipLocal.Items.Add("Aldosivi")
@@ -259,40 +318,4 @@
         cmbEquipVisitante.Items.Add("Velez Sarsfield")
     End Sub
 
-    Private Sub CargarListaDesdeArchivo()
-        'TODO crear una subrutina que cargue en la ListView los datos del archivo
-        'Verificar la integridad del archivo
-        'Si no existe crearlo y arrancar con una planilla en blanco
-        'Si existe cargar todos lso datos en la planilla
-    End Sub
-
-    Private Sub GuardarDatosEnArchivo()
-        'TODO crear una subrutina que guarde en el archivo los datos del formulario
-    End Sub
-
-    Private Sub CargarEjemplosLista()
-        'Ejemplo 1
-        lsvPartidosJugados.Items.Add("04/05/2020")
-        lsvPartidosJugados.Items(0).SubItems.Add("River Plate")
-        lsvPartidosJugados.Items(0).SubItems.Add("Boca Juniors")
-        lsvPartidosJugados.Items(0).SubItems.Add("3")
-        lsvPartidosJugados.Items(0).SubItems.Add("1")
-        lsvPartidosJugados.Items(0).SubItems.Add("Normal")
-
-        'Ejemplo 2
-        lsvPartidosJugados.Items.Add("05/05/2020")
-        lsvPartidosJugados.Items(1).SubItems.Add("Independiente")
-        lsvPartidosJugados.Items(1).SubItems.Add("Racing")
-        lsvPartidosJugados.Items(1).SubItems.Add("0")
-        lsvPartidosJugados.Items(1).SubItems.Add("2")
-        lsvPartidosJugados.Items(1).SubItems.Add("Susp. Clima")
-
-        'Ejemplo 3
-        lsvPartidosJugados.Items.Add("06/05/2020")
-        lsvPartidosJugados.Items(2).SubItems.Add("Rosario Central")
-        lsvPartidosJugados.Items(2).SubItems.Add("Newell")
-        lsvPartidosJugados.Items(2).SubItems.Add("1")
-        lsvPartidosJugados.Items(2).SubItems.Add("1")
-        lsvPartidosJugados.Items(2).SubItems.Add("Susp. Incidentes")
-    End Sub
 End Class
