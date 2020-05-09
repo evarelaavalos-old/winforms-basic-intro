@@ -22,8 +22,8 @@ Public Class frmPartidos
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Ubicacion del archivo desde el cual se cargaran los partidos
-        _rutaArchivo = "/RegistroPartidosJugados.csv"
-        _delimitadorCampo = ","
+        _rutaArchivo = "RegistroPartidosJugados.txt"
+        _delimitadorCampo = ";"
 
         'posiciona el formulario en el centro de la pantalla
         Me.CenterToScreen()
@@ -222,7 +222,7 @@ Public Class frmPartidos
             Dim NroFilaLista As Integer = lsvPartidosJugados.Items.Count '<- deberia ser 0
             While Not Lector.EndOfStream
                 Linea = Lector.ReadLine
-                Campos = Linea.Split(",")
+                Campos = Linea.Split(_delimitadorCampo)
 
                 lsvPartidosJugados.Items.Add(Campos(0))
                 lsvPartidosJugados.Items(NroFilaLista).SubItems.Add(Campos(1))
