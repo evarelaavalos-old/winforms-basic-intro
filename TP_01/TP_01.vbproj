@@ -73,6 +73,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmExportacion.Designer.vb">
+      <DependentUpon>frmExportacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmExportacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPartidos.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmExportacion.resx">
+      <DependentUpon>frmExportacion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPartidos.resx">
       <DependentUpon>frmPartidos.vb</DependentUpon>
     </EmbeddedResource>
