@@ -25,6 +25,7 @@ Partial Class frmPrincipal
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.mnuOpciones = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuAlta = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuExportar = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSalir = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -40,7 +41,7 @@ Partial Class frmPrincipal
         '
         'mnuOpciones
         '
-        Me.mnuOpciones.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAlta, Me.mnuSalir})
+        Me.mnuOpciones.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAlta, Me.mnuExportar, Me.mnuSalir})
         Me.mnuOpciones.Name = "mnuOpciones"
         Me.mnuOpciones.Size = New System.Drawing.Size(69, 20)
         Me.mnuOpciones.Text = "Opciones"
@@ -50,6 +51,12 @@ Partial Class frmPrincipal
         Me.mnuAlta.Name = "mnuAlta"
         Me.mnuAlta.Size = New System.Drawing.Size(180, 22)
         Me.mnuAlta.Text = "Alta"
+        '
+        'mnuExportar
+        '
+        Me.mnuExportar.Name = "mnuExportar"
+        Me.mnuExportar.Size = New System.Drawing.Size(180, 22)
+        Me.mnuExportar.Text = "Exportar"
         '
         'mnuSalir
         '
@@ -77,4 +84,5 @@ Partial Class frmPrincipal
     Friend WithEvents mnuOpciones As ToolStripMenuItem
     Friend WithEvents mnuAlta As ToolStripMenuItem
     Friend WithEvents mnuSalir As ToolStripMenuItem
+    Friend WithEvents mnuExportar As ToolStripMenuItem
 End Class

@@ -100,13 +100,13 @@ Partial Class frmExportacion
         Me.lsvEquipos.HideSelection = False
         Me.lsvEquipos.Location = New System.Drawing.Point(15, 114)
         Me.lsvEquipos.Name = "lsvEquipos"
-        Me.lsvEquipos.Size = New System.Drawing.Size(550, 288)
+        Me.lsvEquipos.Size = New System.Drawing.Size(550, 280)
         Me.lsvEquipos.TabIndex = 2
         Me.lsvEquipos.UseCompatibleStateImageBehavior = False
         '
         'btnExportar
         '
-        Me.btnExportar.Location = New System.Drawing.Point(260, 415)
+        Me.btnExportar.Location = New System.Drawing.Point(260, 405)
         Me.btnExportar.Name = "btnExportar"
         Me.btnExportar.Size = New System.Drawing.Size(75, 23)
         Me.btnExportar.TabIndex = 3

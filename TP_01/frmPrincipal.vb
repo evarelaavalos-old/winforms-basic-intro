@@ -7,6 +7,10 @@
         frmPartidos.ShowDialog()
     End Sub
 
+    Private Sub mnuExportar_Click(sender As Object, e As EventArgs) Handles mnuExportar.Click
+        frmExportacion.ShowDialog()
+    End Sub
+
     Private Sub mnuSalir_Click(sender As Object, e As EventArgs) Handles mnuSalir.Click
         Application.Exit()
     End Sub

@@ -21,17 +21,17 @@ Public Class frmPartidos
     End Enum
 
     Private Sub frmPartidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Ubicacion del archivo desde el cual se cargaran los partidos
-        _rutaArchivo = "RegistroPartidosJugados.txt"
+        'ubicacion del archivo desde el cual se cargaran los partidos
+        _rutaArchivo = "Partidos.txt"
         _delimitadorCampo = ";"
 
         'posiciona el formulario en el centro de la pantalla
         Me.CenterToScreen()
 
-        'La fecha actual es la maxima fecha a elegir
+        'la fecha actual es la maxima fecha a elegir
         dtpFechaPartido.MaxDate = DateTime.Today
 
-        'El usuario no puede tipear equipos personalizados en los combobox
+        'el usuario no puede tipear equipos personalizados en los combobox
         cmbEquipLocal.DropDownStyle = ComboBoxStyle.DropDownList
         cmbEquipVisitante.DropDownStyle = ComboBoxStyle.DropDownList
         CargarEquiposComboBox()
@@ -44,7 +44,6 @@ Public Class frmPartidos
         lsvPartidosJugados.View = View.Details
         lsvPartidosJugados.FullRowSelect = True
         CargarListaDesdeArchivo()
-        'CargarEjemplosLista()
 
         'columnas de la listview
         lsvPartidosJugados.Columns.Add("Fecha", 60, HorizontalAlignment.Left)
