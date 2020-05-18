@@ -3,11 +3,27 @@
 Public Class frmExportacion
     Private _rutaArchivo As String
     Private _delimitadorCampo As Char
+    Private _listaPartidos As ListaPartidos
+    Private _filtroActual As FiltrosActivados
+    Private _elementosListView As Integer
+    'TODO crear un condicional que me permita evaluar si es la primera vez que se ejecuta el programa
+    ' para no tener que volver a configurar todo nuevamente
+    'Private _seHanAplicadoConfIniciales As Boolean
+
+    Private Enum FiltrosActivados
+        Estado_Invalido
+        Sin_Filtros
+        Filtrar_Equipos_Local
+        Filtrar_Equipos_Visitante
+    End Enum
 
     Private Sub frmExportacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'ubicacion del archivo desde el cual se cargaran los partidos
         _rutaArchivo = "Partidos.txt"
         _delimitadorCampo = ";"
+        _listaPartidos = New ListaPartidos()
+        _elementosListView = 0
+        ImportarPartidos()
 
         'posiciona el formulario en el centro de la pantalla
         Me.CenterToScreen()
@@ -19,11 +35,6 @@ Public Class frmExportacion
         'por defecto el checkbox "Todos" está marcado y el groupbox "Filtro" deshabilitado
         'al habilitar el chechbox "Todos" se cargan los datos en la list view
         chkTodos.Checked = True
-        grpFiltro.Enabled = False
-
-        'opciones por default del filtro
-        cmbEquipoFiltrado.SelectedIndex = 0
-        rbLocal.Checked = True
 
         'configuracion de la lista
         lsvEquipos.View = View.Details
@@ -31,94 +42,16 @@ Public Class frmExportacion
 
     End Sub
 
-    Private Sub chkTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodos.CheckedChanged
-        If chkTodos.Checked Then
-            grpFiltro.Enabled = False
-            ReiniciarLista()
-            Cargar()
-        Else
-            grpFiltro.Enabled = True
-        End If
-    End Sub
-
-    Private Sub btnFiltrar_Click(sender As Object, e As EventArgs) Handles btnFiltrar.Click
-        ReiniciarLista()
-        Cargar()
-    End Sub
-
-    Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        'la siguiente linea agrega automaticamente la extension
-        SFD.AddExtension = True
-        'la siguiente linea define la extension por default
-        SFD.DefaultExt = "*.txt"
-        'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
-        'en este ejemplo solo podra seleccionar un unico tipo
-        SFD.Filter = "Archivo de Texto (.txt)|*.txt"
-        'la siguiente linea define el directorio que se presentara por default
-        SFD.InitialDirectory = Application.StartupPath
-        'la siguiente linea define si al momento de seleccionar un archivo existente
-        'se le debera advertir al usuario que sera sobreescrito
-        SFD.OverwritePrompt = False
-        'la siguiente linea vacia el contenido del campo
-        SFD.FileName = String.Empty
-
-        'el siguiente condicional ejecutara las lineas contenidas, solo si el usuario
-        'acepto registrar en el archivo
-        If SFD.ShowDialog = DialogResult.OK Then
-            'la siguiente linea instancia un objeto de la clase FileStream donde se define
-            'el archivo sobre el cual trabajar y el modo de apertura
-            Dim archivoAGrabar As FileStream = New FileStream(SFD.FileName, FileMode.Append)
-            Dim grabador As StreamWriter = New StreamWriter(archivoAGrabar)
-
-            Dim archivoALeer As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
-            Dim lector As StreamReader = New StreamReader(archivoALeer)
-            Dim partido As PartidoFutbol = New PartidoFutbol()
-
-            If File.Exists(_rutaArchivo) Then
-                While Not lector.EndOfStream
-                    partido.Parse(lector.ReadLine(), _delimitadorCampo)
-
-                    If chkTodos.Checked Then
-                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
-
-                    ElseIf rbLocal.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoLocal() Then
-                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
-
-                    ElseIf rbVisitante.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoVisitante() Then
-                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
-                    End If
-                End While
-            End If
-
-            grabador.Close()
-            lector.Close()
-            archivoAGrabar.Close()
-            archivoALeer.Close()
-        End If
-    End Sub
-
-    Private Sub Cargar()
+    Private Sub ImportarPartidos()
         If File.Exists(_rutaArchivo) Then
             Dim archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
             Dim lector As StreamReader = New StreamReader(archivo)
-            Dim partido As PartidoFutbol = New PartidoFutbol()
-            Dim nroPartidosCargados As Integer = lsvEquipos.Items.Count '<- deberia ser 0
 
             While Not lector.EndOfStream
-                partido.Parse(lector.ReadLine(), _delimitadorCampo)
+                Dim partido As PartidoFutbol = New PartidoFutbol()
+                partido.Parse(lector.ReadLine, _delimitadorCampo)
 
-                If chkTodos.Checked Then
-                    CargarPartido(partido, nroPartidosCargados)
-                    nroPartidosCargados += 1
-
-                ElseIf rbLocal.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoLocal() Then
-                    CargarPartido(partido, nroPartidosCargados)
-                    nroPartidosCargados += 1
-
-                ElseIf rbVisitante.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoVisitante() Then
-                    CargarPartido(partido, nroPartidosCargados)
-                    nroPartidosCargados += 1
-                End If
+                _listaPartidos.Anexar(partido)
             End While
 
             lector.Close()
@@ -126,16 +59,9 @@ Public Class frmExportacion
         End If
     End Sub
 
-    Private Sub CargarPartido(partido As PartidoFutbol, ubicacion As Integer)
-        lsvEquipos.Items.Add(partido.GetFechaPartido().ToShortDateString())
-        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetEquipoLocal())
-        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetEquipoVisitante())
-        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesLocal().ToString())
-        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesVisitante().ToString())
-        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetFinalizacion())
-    End Sub
+    Private Sub LimpiarListaPartidos()
+        _elementosListView = 0
 
-    Private Sub ReiniciarLista()
         lsvEquipos.Clear()
         lsvEquipos.Columns.Add("Fecha", 80, HorizontalAlignment.Left)
         lsvEquipos.Columns.Add("Local", 110, HorizontalAlignment.Left)
@@ -143,6 +69,90 @@ Public Class frmExportacion
         lsvEquipos.Columns.Add("Goles L.", 60, HorizontalAlignment.Center)
         lsvEquipos.Columns.Add("Goles V.", 60, HorizontalAlignment.Center)
         lsvEquipos.Columns.Add("Finalizacion", 120, HorizontalAlignment.Center)
+    End Sub
+
+    Private Sub RefrescarListaPartidos()
+        Dim cantidadPartidos As Integer = _listaPartidos.Contar()
+        Dim partido As PartidoFutbol
+
+        Select Case _filtroActual
+
+            Case FiltrosActivados.Sin_Filtros
+                For i = 0 To cantidadPartidos - 1
+                    partido = _listaPartidos.Acceder(i)
+                    CargarPartidoEnLista(partido)
+                Next
+
+            Case FiltrosActivados.Filtrar_Equipos_Local
+                For i = 0 To cantidadPartidos - 1
+                    partido = _listaPartidos.Acceder(i)
+
+                    If partido.GetEquipoLocal() = cmbEquipoFiltrado.Text Then
+                        CargarPartidoEnLista(partido)
+                    End If
+                Next
+
+            Case FiltrosActivados.Filtrar_Equipos_Visitante
+                For i = 0 To cantidadPartidos - 1
+                    partido = _listaPartidos.Acceder(i)
+
+                    If partido.GetEquipoVisitante() = cmbEquipoFiltrado.Text Then
+                        CargarPartidoEnLista(partido)
+                    End If
+                Next
+        End Select
+    End Sub
+
+    Private Sub CargarPartidoEnLista(partido As PartidoFutbol)
+        lsvEquipos.Items.Add(partido.GetFechaPartido().ToShortDateString())
+        lsvEquipos.Items(_elementosListView).SubItems.Add(partido.GetEquipoLocal())
+        lsvEquipos.Items(_elementosListView).SubItems.Add(partido.GetEquipoVisitante())
+        lsvEquipos.Items(_elementosListView).SubItems.Add(partido.GetGolesLocal().ToString())
+        lsvEquipos.Items(_elementosListView).SubItems.Add(partido.GetGolesVisitante().ToString())
+        lsvEquipos.Items(_elementosListView).SubItems.Add(partido.GetFinalizacion())
+
+        _elementosListView += 1
+    End Sub
+
+    Private Sub ExportarPartidos()
+
+    End Sub
+
+    Private Sub chkTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodos.CheckedChanged
+        If chkTodos.Checked Then
+            grpFiltro.Enabled = False
+            _filtroActual = FiltrosActivados.Sin_Filtros
+            LimpiarListaPartidos()
+            RefrescarListaPartidos()
+        Else
+            grpFiltro.Enabled = True
+            _filtroActual = FiltrosActivados.Filtrar_Equipos_Local
+            rbLocal.Checked = True
+            cmbEquipoFiltrado.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub btnFiltrar_Click(sender As Object, e As EventArgs) Handles btnFiltrar.Click
+        LimpiarListaPartidos()
+        RefrescarListaPartidos()
+    End Sub
+
+    'TODO cuando se ejecute este boton, se debera exportar los elementos de la listview
+    ' en un archivo de texto
+    Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
+
+    End Sub
+
+    Private Sub rbLocal_CheckedChanged(sender As Object, e As EventArgs) Handles rbLocal.CheckedChanged
+        If rbLocal.Enabled Then
+            _filtroActual = FiltrosActivados.Filtrar_Equipos_Local
+        End If
+    End Sub
+
+    Private Sub rbVisitante_CheckedChanged(sender As Object, e As EventArgs) Handles rbVisitante.CheckedChanged
+        If rbVisitante.Enabled Then
+            _filtroActual = FiltrosActivados.Filtrar_Equipos_Visitante
+        End If
     End Sub
 
     Private Sub CargarEquiposComboBox()
@@ -171,5 +181,4 @@ Public Class frmExportacion
         cmbEquipoFiltrado.Items.Add("Union de Santa Fe")
         cmbEquipoFiltrado.Items.Add("Velez Sarsfield")
     End Sub
-
 End Class
