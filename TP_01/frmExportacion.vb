@@ -47,7 +47,35 @@ Public Class frmExportacion
     End Sub
 
     Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        'TODO abrir una ventana emergente donde guardar los resultados de la lista
+        Dim Archivo As FileStream
+        Dim Grabador As StreamWriter
+
+        If txtRegistrar.Text.Trim <> String.Empty Then
+            'la siguiente linea agrega automaticamente la extension
+            SFD.AddExtension = True
+            'la siguiente linea define la extension por default
+            SFD.DefaultExt = "*.txt"
+            'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
+            'en este ejemplo solo podra seleccionar un unico tipo
+            SFD.Filter = "Archivo de Texto (.txt)|*.txt"
+            'la siguiente linea define el directorio que se presentara por default
+            SFD.InitialDirectory = Application.StartupPath
+            'la siguiente linea define si al momento de seleccionar un archivo existente
+            'se le debera advertir al usuario que sera sobreescrito
+            SFD.OverwritePrompt = False
+            'la siguiente linea vacia el contenido del campo
+            SFD.FileName = String.Empty
+            'el siguiente condicional ejecutara las lineas contenidas, solo si el usuario
+            'acepto registrar en el archivo
+            If SFD.ShowDialog = DialogResult.OK Then
+                'la siguiente linea instancia un objeto de la clase FileStream donde se define
+                'el archivo sobre el cual trabajar y el modo de apertura
+                Archivo = New FileStream(SFD.FileName, FileMode.Append)
+                Grabador = New StreamWriter(Archivo)
+                Grabador.WriteLine(txtRegistrar.Text)
+                Grabador.Close()
+                Archivo.Close()
+            End If
     End Sub
 
     Private Sub Cargar()
