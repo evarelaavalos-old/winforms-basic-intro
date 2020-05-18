@@ -78,6 +78,40 @@ Public Class frmExportacion
             End If
     End Sub
 
+    Private Sub CargarConClase()
+        'TODO agregar una condicion donde cargue solo los elementos filtrados por nombre
+        If File.Exists(_rutaArchivo) Then
+            Dim archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
+            Dim lector As StreamReader = New StreamReader(archivo)
+            Dim partido As PartidoFutbol = New PartidoFutbol()
+            Dim nroPartidosCargados As Integer = lsvEquipos.Items.Count '<- deberia ser 0
+
+            While Not lector.EndOfStream
+                partido.Parse(lector.ReadLine(), _delimitadorCampo)
+
+                If chkTodos.Checked Then
+                    CargarPartido(partido, nroPartidosCargados)
+                    nroPartidosCargados += 1
+                ElseIf rbLocal.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoLocal() Then
+                    CargarPartido(partido, nroPartidosCargados)
+                    nroPartidosCargados += 1
+                ElseIf rbVisitante.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoVisitante() Then
+                    CargarPartido(partido, nroPartidosCargados)
+                    nroPartidosCargados += 1
+                End If
+            End While
+        End If
+    End Sub
+
+    Private Sub CargarPartido(partido As PartidoFutbol, ubicacion As Integer)
+        lsvEquipos.Items.Add(partido.GetFechaPartido().ToShortDateString())
+        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetEquipoLocal())
+        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetEquipoVisitante())
+        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesLocal().ToString())
+        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesVisitante().ToString())
+        lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetFinalizacion())
+    End Sub
+
     Private Sub Cargar()
         'TODO agregar una condicion donde cargue solo los elementos filtrados por nombre
         If File.Exists(_rutaArchivo) Then

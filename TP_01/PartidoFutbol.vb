@@ -6,7 +6,7 @@
     Private _golesVisitante As Short
     Private _finalizacion As String
 
-    Public Sub New(registro As String, separador As Char)
+    Public Sub Parse(registro As String, separador As Char)
         Dim campo(5) As String
         campo = registro.Split(separador)
 
