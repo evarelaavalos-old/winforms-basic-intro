@@ -33,8 +33,8 @@ Public Class frmExportacion
 
     Private Sub chkTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodos.CheckedChanged
         If chkTodos.Checked Then
-            ReiniciarLista()
             grpFiltro.Enabled = False
+            ReiniciarLista()
             Cargar()
         Else
             grpFiltro.Enabled = True
@@ -47,39 +47,9 @@ Public Class frmExportacion
     End Sub
 
     Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        Dim Archivo As FileStream
-        Dim Grabador As StreamWriter
-
-        If txtRegistrar.Text.Trim <> String.Empty Then
-            'la siguiente linea agrega automaticamente la extension
-            SFD.AddExtension = True
-            'la siguiente linea define la extension por default
-            SFD.DefaultExt = "*.txt"
-            'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
-            'en este ejemplo solo podra seleccionar un unico tipo
-            SFD.Filter = "Archivo de Texto (.txt)|*.txt"
-            'la siguiente linea define el directorio que se presentara por default
-            SFD.InitialDirectory = Application.StartupPath
-            'la siguiente linea define si al momento de seleccionar un archivo existente
-            'se le debera advertir al usuario que sera sobreescrito
-            SFD.OverwritePrompt = False
-            'la siguiente linea vacia el contenido del campo
-            SFD.FileName = String.Empty
-            'el siguiente condicional ejecutara las lineas contenidas, solo si el usuario
-            'acepto registrar en el archivo
-            If SFD.ShowDialog = DialogResult.OK Then
-                'la siguiente linea instancia un objeto de la clase FileStream donde se define
-                'el archivo sobre el cual trabajar y el modo de apertura
-                Archivo = New FileStream(SFD.FileName, FileMode.Append)
-                Grabador = New StreamWriter(Archivo)
-                Grabador.WriteLine(txtRegistrar.Text)
-                Grabador.Close()
-                Archivo.Close()
-            End If
     End Sub
 
-    Private Sub CargarConClase()
-        'TODO agregar una condicion donde cargue solo los elementos filtrados por nombre
+    Private Sub Cargar()
         If File.Exists(_rutaArchivo) Then
             Dim archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
             Dim lector As StreamReader = New StreamReader(archivo)
@@ -92,14 +62,19 @@ Public Class frmExportacion
                 If chkTodos.Checked Then
                     CargarPartido(partido, nroPartidosCargados)
                     nroPartidosCargados += 1
+
                 ElseIf rbLocal.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoLocal() Then
                     CargarPartido(partido, nroPartidosCargados)
                     nroPartidosCargados += 1
+
                 ElseIf rbVisitante.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoVisitante() Then
                     CargarPartido(partido, nroPartidosCargados)
                     nroPartidosCargados += 1
                 End If
             End While
+
+            lector.Close()
+            archivo.Close()
         End If
     End Sub
 
@@ -110,70 +85,6 @@ Public Class frmExportacion
         lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesLocal().ToString())
         lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetGolesVisitante().ToString())
         lsvEquipos.Items(ubicacion).SubItems.Add(partido.GetFinalizacion())
-    End Sub
-
-    Private Sub Cargar()
-        'TODO agregar una condicion donde cargue solo los elementos filtrados por nombre
-        If File.Exists(_rutaArchivo) Then
-            Dim Archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
-            Dim Lector As StreamReader = New StreamReader(Archivo)
-
-            Dim Linea As String
-            Dim Campos(5) As String
-            Dim NroFilaLista As Integer = lsvEquipos.Items.Count '<- deberia ser 0
-            If chkTodos.Checked Then
-                While Not Lector.EndOfStream
-                    Linea = Lector.ReadLine
-                    Campos = Linea.Split(_delimitadorCampo)
-
-                    lsvEquipos.Items.Add(Campos(0))
-                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
-                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
-                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
-                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
-                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
-
-                    NroFilaLista += 1
-                End While
-            Else
-                If rbLocal.Checked Then
-                    While Not Lector.EndOfStream
-                        Linea = Lector.ReadLine
-                        Campos = Linea.Split(_delimitadorCampo)
-
-                        If cmbEquipoFiltrado.Text = Campos(1) Then
-                            lsvEquipos.Items.Add(Campos(0))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
-
-                            NroFilaLista += 1
-                        End If
-                    End While
-                ElseIf rbVisitante.Checked Then
-                    While Not Lector.EndOfStream
-                        Linea = Lector.ReadLine
-                        Campos = Linea.Split(_delimitadorCampo)
-
-                        If cmbEquipoFiltrado.Text = Campos(2) Then
-                            lsvEquipos.Items.Add(Campos(0))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
-                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
-
-                            NroFilaLista += 1
-                        End If
-                    End While
-                End If
-            End If
-
-            Lector.Close()
-            Archivo.Close()
-        End If
     End Sub
 
     Private Sub ReiniciarLista()
