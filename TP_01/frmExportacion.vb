@@ -17,56 +17,41 @@ Public Class frmExportacion
         CargarEquiposComboBox()
 
         'por defecto el checkbox "Todos" está marcado y el groupbox "Filtro" deshabilitado
+        'al habilitar el chechbox "Todos" se cargan los datos en la list view
+        chkTodos.Checked = True
+        grpFiltro.Enabled = False
 
         'opciones por default del filtro
-        'TODO seleccionar el primer equipo para el filtro
-        'TODO seleccionar la opcion local como default del filtro
+        cmbEquipoFiltrado.SelectedIndex = 0
+        rbLocal.Checked = True
 
         'configuracion de la lista
         lsvEquipos.View = View.Details
         lsvEquipos.FullRowSelect = True
-        CargarListaDesdeArchivo()
 
-        'columnas de la listview
-        lsvEquipos.Columns.Add("Fecha", 80, HorizontalAlignment.Left)
-        lsvEquipos.Columns.Add("Local", 110, HorizontalAlignment.Left)
-        lsvEquipos.Columns.Add("Visitante", 110, HorizontalAlignment.Left)
-        lsvEquipos.Columns.Add("Goles L.", 60, HorizontalAlignment.Left)
-        lsvEquipos.Columns.Add("Goles V.", 60, HorizontalAlignment.Left)
-        lsvEquipos.Columns.Add("Finalizacion", 120, HorizontalAlignment.Left)
-        'TODO centrar la columna de los goles de local
-        'TODO centrar la columna de los goles de visitante
-        'TODO centrar la columna de finalizacion
     End Sub
 
     Private Sub chkTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodos.CheckedChanged
-        'TODO por defecto el chkbox Filtro está habilitado
-        'TODO si el chkbox Filtro está habilitado
-        '       groupbox está deshabilitado
-        'en cambio si está deshabilitado
-        '       groupbox está habilitado
-
-        'TODO si marcas el checkbox
-        '   deshabilitar el groupbox
-        '   mostrar todos las entradas del archivos
-        '       CargarDatosLista()
-        'si desmarcas el chechbox
-        '   habilitar el groupbox
-
-
+        If chkTodos.Checked Then
+            ReiniciarLista()
+            grpFiltro.Enabled = False
+            Cargar()
+        Else
+            grpFiltro.Enabled = True
+        End If
     End Sub
 
     Private Sub btnFiltrar_Click(sender As Object, e As EventArgs) Handles btnFiltrar.Click
-        'TODO se ejecutara automaticamente la funcion CARGAR
-        'LimpiarListView()
-        'CargarListaConDatosFiltrados()
+        ReiniciarLista()
+        Cargar()
     End Sub
 
     Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        '
+        'TODO abrir una ventana emergente donde guardar los resultados de la lista
     End Sub
 
-    Private Sub CargarListaDesdeArchivo()
+    Private Sub Cargar()
+        'TODO agregar una condicion donde cargue solo los elementos filtrados por nombre
         If File.Exists(_rutaArchivo) Then
             Dim Archivo As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
             Dim Lector As StreamReader = New StreamReader(Archivo)
@@ -93,8 +78,17 @@ Public Class frmExportacion
         End If
     End Sub
 
+    Private Sub ReiniciarLista()
+        lsvEquipos.Clear()
+        lsvEquipos.Columns.Add("Fecha", 80, HorizontalAlignment.Left)
+        lsvEquipos.Columns.Add("Local", 110, HorizontalAlignment.Left)
+        lsvEquipos.Columns.Add("Visitante", 110, HorizontalAlignment.Left)
+        lsvEquipos.Columns.Add("Goles L.", 60, HorizontalAlignment.Center)
+        lsvEquipos.Columns.Add("Goles V.", 60, HorizontalAlignment.Center)
+        lsvEquipos.Columns.Add("Finalizacion", 120, HorizontalAlignment.Center)
+    End Sub
+
     Private Sub CargarEquiposComboBox()
-        'equipos de local
         cmbEquipoFiltrado.Items.Add("Aldosivi")
         cmbEquipoFiltrado.Items.Add("Argentinos")
         cmbEquipoFiltrado.Items.Add("Arsenal")
