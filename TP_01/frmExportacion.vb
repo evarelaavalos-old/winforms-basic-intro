@@ -47,6 +47,54 @@ Public Class frmExportacion
     End Sub
 
     Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
+        'la siguiente linea agrega automaticamente la extension
+        SFD.AddExtension = True
+        'la siguiente linea define la extension por default
+        SFD.DefaultExt = "*.txt"
+        'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
+        'en este ejemplo solo podra seleccionar un unico tipo
+        SFD.Filter = "Archivo de Texto (.txt)|*.txt"
+        'la siguiente linea define el directorio que se presentara por default
+        SFD.InitialDirectory = Application.StartupPath
+        'la siguiente linea define si al momento de seleccionar un archivo existente
+        'se le debera advertir al usuario que sera sobreescrito
+        SFD.OverwritePrompt = False
+        'la siguiente linea vacia el contenido del campo
+        SFD.FileName = String.Empty
+
+        'el siguiente condicional ejecutara las lineas contenidas, solo si el usuario
+        'acepto registrar en el archivo
+        If SFD.ShowDialog = DialogResult.OK Then
+            'la siguiente linea instancia un objeto de la clase FileStream donde se define
+            'el archivo sobre el cual trabajar y el modo de apertura
+            Dim archivoAGrabar As FileStream = New FileStream(SFD.FileName, FileMode.Append)
+            Dim grabador As StreamWriter = New StreamWriter(archivoAGrabar)
+
+            Dim archivoALeer As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
+            Dim lector As StreamReader = New StreamReader(archivoALeer)
+            Dim partido As PartidoFutbol = New PartidoFutbol()
+
+            If File.Exists(_rutaArchivo) Then
+                While Not lector.EndOfStream
+                    partido.Parse(lector.ReadLine(), _delimitadorCampo)
+
+                    If chkTodos.Checked Then
+                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
+
+                    ElseIf rbLocal.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoLocal() Then
+                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
+
+                    ElseIf rbVisitante.Checked And cmbEquipoFiltrado.Text = partido.GetEquipoVisitante() Then
+                        grabador.WriteLine(partido.EnUnaLineaSeparadoPor(_delimitadorCampo))
+                    End If
+                End While
+            End If
+
+            grabador.Close()
+            lector.Close()
+            archivoAGrabar.Close()
+            archivoALeer.Close()
+        End If
     End Sub
 
     Private Sub Cargar()
