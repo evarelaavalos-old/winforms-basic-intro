@@ -59,19 +59,55 @@ Public Class frmExportacion
             Dim Linea As String
             Dim Campos(5) As String
             Dim NroFilaLista As Integer = lsvEquipos.Items.Count '<- deberia ser 0
-            While Not Lector.EndOfStream
-                Linea = Lector.ReadLine
-                Campos = Linea.Split(_delimitadorCampo)
+            If chkTodos.Checked Then
+                While Not Lector.EndOfStream
+                    Linea = Lector.ReadLine
+                    Campos = Linea.Split(_delimitadorCampo)
 
-                lsvEquipos.Items.Add(Campos(0))
-                lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
-                lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
-                lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
-                lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
-                lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
+                    lsvEquipos.Items.Add(Campos(0))
+                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
+                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
+                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
+                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
+                    lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
 
-                NroFilaLista += 1
-            End While
+                    NroFilaLista += 1
+                End While
+            Else
+                If rbLocal.Checked Then
+                    While Not Lector.EndOfStream
+                        Linea = Lector.ReadLine
+                        Campos = Linea.Split(_delimitadorCampo)
+
+                        If cmbEquipoFiltrado.Text = Campos(1) Then
+                            lsvEquipos.Items.Add(Campos(0))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
+
+                            NroFilaLista += 1
+                        End If
+                    End While
+                ElseIf rbVisitante.Checked Then
+                    While Not Lector.EndOfStream
+                        Linea = Lector.ReadLine
+                        Campos = Linea.Split(_delimitadorCampo)
+
+                        If cmbEquipoFiltrado.Text = Campos(2) Then
+                            lsvEquipos.Items.Add(Campos(0))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(1))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(2))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(3))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(4))
+                            lsvEquipos.Items(NroFilaLista).SubItems.Add(Campos(5))
+
+                            NroFilaLista += 1
+                        End If
+                    End While
+                End If
+            End If
 
             Lector.Close()
             Archivo.Close()
