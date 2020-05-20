@@ -1,10 +1,13 @@
 ﻿Imports System.IO
 
+'TODO eliminar LFD (el coso que carga, no va mas ese)
 Public Class frmExportacion
     Private _rutaArchivo As String
     Private _delimitadorCampo As Char
     Private _listaPartidos As ListaPartidos
     Private _filtroActual As FiltrosActivados
+    'TODO cambiar el nombre de esta variable por otro, cecchi lo llama de otra forma
+    'TODO es necesaria esta variable? o ListView ya implementa una variable para esta informacion?
     Private _elementosListView As Integer
     'TODO crear un condicional que me permita evaluar si es la primera vez que se ejecuta el programa
     ' para no tener que volver a configurar todo nuevamente
@@ -115,7 +118,33 @@ Public Class frmExportacion
     End Sub
 
     Private Sub ExportarPartidos()
+        'la siguiente linea agrega automaticamente la extension
+        SFD.AddExtension = True
+        'la siguiente linea define la extension por default
+        SFD.DefaultExt = "*.txt"
+        'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
+        'en este ejemplo solo podra seleccionar un unico tipo
+        SFD.Filter = "Archivo de Texto (.txt)|*.txt"
+        'la siguiente linea define el directorio que se presentara por default
+        SFD.InitialDirectory = Application.StartupPath
+        'la siguiente linea define si al momento de seleccionar un archivo existente
+        'se le debera advertir al usuario que sera sobreescrito
+        SFD.OverwritePrompt = False
+        'la siguiente linea vacia el contenido del campo
+        SFD.FileName = String.Empty
 
+        If SFD.ShowDialog() = DialogResult Then
+            'la siguiente linea instancia un objeto de la clase FileStream donde se define
+            'el archivo sobre el cual trabajar y el modo de apertura
+            Dim archivoAGrabar As FileStream = New FileStream(SFD.FileName, FileMode.Append)
+            Dim grabador As StreamWriter = New StreamWriter(archivoAGrabar)
+
+            Dim archivoALeer As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
+            Dim lector As StreamReader = New StreamReader(archivoALeer)
+            Dim partido As PartidoFutbol = New PartidoFutbol()
+            grabador.Close()
+            archivoAGrabar.Close()
+        End If
     End Sub
 
     Private Sub chkTodos_CheckedChanged(sender As Object, e As EventArgs) Handles chkTodos.CheckedChanged
@@ -140,7 +169,7 @@ Public Class frmExportacion
     'TODO cuando se ejecute este boton, se debera exportar los elementos de la listview
     ' en un archivo de texto
     Private Sub btnExportar_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-
+        ExportarPartidos()
     End Sub
 
     Private Sub rbLocal_CheckedChanged(sender As Object, e As EventArgs) Handles rbLocal.CheckedChanged
