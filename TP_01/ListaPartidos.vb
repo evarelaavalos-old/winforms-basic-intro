@@ -1,8 +1,7 @@
-﻿Public Class ListaPartidos
+﻿Imports System.IO
+Public Class ListaPartidos
     Private _cantidadPartidos As Integer
     Private _partidosCargados() As PartidoFutbol
-    'TODO crear una variable que almacene el numero que se tiene en cuenta para redimensionar
-    ' el vector (10 actualmente)
 
     Public Sub New()
         _cantidadPartidos = 0
@@ -25,6 +24,23 @@
     Public Function Contar() As Integer
         Return _cantidadPartidos
     End Function
+
+    Public Sub Importar(rutaArchivo As String, delimitadorCampo As Char)
+        If File.Exists(rutaArchivo) Then
+            Dim archivo As FileStream = New FileStream(rutaArchivo, FileMode.Open)
+            Dim lector As StreamReader = New StreamReader(archivo)
+
+            While Not lector.EndOfStream
+                Dim partido As PartidoFutbol = New PartidoFutbol()
+                partido.Parse(lector.ReadLine, delimitadorCampo)
+
+                Me.Anexar(partido)
+            End While
+
+            lector.Close()
+            archivo.Close()
+        End If
+    End Sub
 
     Private Function EsNecesarioRedimensionarVector() As Boolean
         Return _cantidadPartidos Mod 10 = 0

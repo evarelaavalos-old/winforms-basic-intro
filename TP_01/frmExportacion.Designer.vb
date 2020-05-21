@@ -30,7 +30,6 @@ Partial Class frmExportacion
         Me.cmbEquipoFiltrado = New System.Windows.Forms.ComboBox()
         Me.lsvEquipos = New System.Windows.Forms.ListView()
         Me.btnExportar = New System.Windows.Forms.Button()
-        Me.OFD = New System.Windows.Forms.OpenFileDialog()
         Me.SFD = New System.Windows.Forms.SaveFileDialog()
         Me.grpFiltro.SuspendLayout()
         Me.SuspendLayout()
@@ -115,10 +114,6 @@ Partial Class frmExportacion
         Me.btnExportar.Text = "Exportar"
         Me.btnExportar.UseVisualStyleBackColor = True
         '
-        'OFD
-        '
-        Me.OFD.FileName = "OpenFileDialog1"
-        '
         'frmExportacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -145,6 +140,5 @@ Partial Class frmExportacion
     Friend WithEvents cmbEquipoFiltrado As ComboBox
     Friend WithEvents lsvEquipos As ListView
     Friend WithEvents btnExportar As Button
-    Friend WithEvents OFD As OpenFileDialog
     Friend WithEvents SFD As SaveFileDialog
 End Class

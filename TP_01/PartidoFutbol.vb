@@ -6,6 +6,7 @@
     Private _golesVisitante As Short
     Private _finalizacion As String
 
+    'TODO utilizar un nombre mas representativo para este metodo
     Public Sub Parse(registro As String, separador As Char)
         Dim campo(5) As String
         campo = registro.Split(separador)
