@@ -31,7 +31,7 @@ Partial Class frmPresentacion
         'pcbPresentacion
         '
         Me.pcbPresentacion.Image = CType(resources.GetObject("pcbPresentacion.Image"), System.Drawing.Image)
-        Me.pcbPresentacion.Location = New System.Drawing.Point(120, 25)
+        Me.pcbPresentacion.Location = New System.Drawing.Point(45, 25)
         Me.pcbPresentacion.Name = "pcbPresentacion"
         Me.pcbPresentacion.Size = New System.Drawing.Size(560, 304)
         Me.pcbPresentacion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -42,7 +42,7 @@ Partial Class frmPresentacion
         '
         Me.lblPresentacion.AutoSize = True
         Me.lblPresentacion.Font = New System.Drawing.Font("Arial Rounded MT Bold", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPresentacion.Location = New System.Drawing.Point(250, 360)
+        Me.lblPresentacion.Location = New System.Drawing.Point(175, 360)
         Me.lblPresentacion.Name = "lblPresentacion"
         Me.lblPresentacion.Size = New System.Drawing.Size(307, 33)
         Me.lblPresentacion.TabIndex = 1
@@ -52,7 +52,7 @@ Partial Class frmPresentacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(650, 450)
         Me.Controls.Add(Me.lblPresentacion)
         Me.Controls.Add(Me.pcbPresentacion)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
