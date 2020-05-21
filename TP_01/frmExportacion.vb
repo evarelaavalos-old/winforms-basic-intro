@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 'TODO eliminar LFD (el coso que carga, no va mas ese)
+'TODO cada vez que nombre a la lista lo voy a llamar de determinada forma
 Public Class frmExportacion
     Private _rutaArchivo As String
     Private _delimitadorCampo As Char
@@ -42,6 +43,13 @@ Public Class frmExportacion
         'configuracion de la lista
         lsvEquipos.View = View.Details
         lsvEquipos.FullRowSelect = True
+
+        'configuracion del SFD
+        SFD.AddExtension = True
+        SFD.DefaultExt = "*.txt"
+        SFD.Filter = "Archivo de Texto (.txt)|*.txt"
+        SFD.InitialDirectory = Application.StartupPath
+        SFD.OverwritePrompt = True
 
     End Sub
 
@@ -117,33 +125,34 @@ Public Class frmExportacion
         _elementosListView += 1
     End Sub
 
+    Private Function LeerColumnaEnLista(indice As Integer) As String
+        If (indice < _elementosListView) Then
+            Return lsvEquipos.Items(indice).SubItems(0).Text & _delimitadorCampo _
+                & lsvEquipos.Items(indice).SubItems(1).Text & _delimitadorCampo _
+                & lsvEquipos.Items(indice).SubItems(2).Text & _delimitadorCampo _
+                & lsvEquipos.Items(indice).SubItems(3).Text & _delimitadorCampo _
+                & lsvEquipos.Items(indice).SubItems(4).Text & _delimitadorCampo _
+                & lsvEquipos.Items(indice).SubItems(5).Text
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Private Sub ExportarPartidos()
-        'la siguiente linea agrega automaticamente la extension
-        SFD.AddExtension = True
-        'la siguiente linea define la extension por default
-        SFD.DefaultExt = "*.txt"
-        'la siguiente linea define los tipos de archivos que el usuario podra seleccionar,
-        'en este ejemplo solo podra seleccionar un unico tipo
-        SFD.Filter = "Archivo de Texto (.txt)|*.txt"
-        'la siguiente linea define el directorio que se presentara por default
-        SFD.InitialDirectory = Application.StartupPath
-        'la siguiente linea define si al momento de seleccionar un archivo existente
-        'se le debera advertir al usuario que sera sobreescrito
-        SFD.OverwritePrompt = False
-        'la siguiente linea vacia el contenido del campo
         SFD.FileName = String.Empty
 
-        If SFD.ShowDialog() = DialogResult Then
-            'la siguiente linea instancia un objeto de la clase FileStream donde se define
-            'el archivo sobre el cual trabajar y el modo de apertura
-            Dim archivoAGrabar As FileStream = New FileStream(SFD.FileName, FileMode.Append)
-            Dim grabador As StreamWriter = New StreamWriter(archivoAGrabar)
+        If SFD.ShowDialog() = DialogResult.OK Then
+            Dim archivo As FileStream = New FileStream(SFD.FileName, FileMode.Append)
+            Dim grabador As StreamWriter = New StreamWriter(archivo)
+            Dim partido As String = String.Empty
 
-            Dim archivoALeer As FileStream = New FileStream(_rutaArchivo, FileMode.Open)
-            Dim lector As StreamReader = New StreamReader(archivoALeer)
-            Dim partido As PartidoFutbol = New PartidoFutbol()
+            For i = 0 To _elementosListView - 1
+                partido = LeerColumnaEnLista(i)
+                grabador.WriteLine(partido)
+            Next
+
             grabador.Close()
-            archivoAGrabar.Close()
+            archivo.Close()
         End If
     End Sub
 
