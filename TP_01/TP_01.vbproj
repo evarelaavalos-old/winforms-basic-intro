@@ -79,11 +79,11 @@
     <Compile Include="frmExportacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPartidos.vb">
+    <Compile Include="frmAlta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPartidos.Designer.vb">
-      <DependentUpon>frmPartidos.vb</DependentUpon>
+    <Compile Include="frmAlta.Designer.vb">
+      <DependentUpon>frmAlta.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPresentacion.Designer.vb">
@@ -121,8 +121,8 @@
     <EmbeddedResource Include="frmExportacion.resx">
       <DependentUpon>frmExportacion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPartidos.resx">
-      <DependentUpon>frmPartidos.vb</DependentUpon>
+    <EmbeddedResource Include="frmAlta.resx">
+      <DependentUpon>frmAlta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPresentacion.resx">
       <DependentUpon>frmPresentacion.vb</DependentUpon>

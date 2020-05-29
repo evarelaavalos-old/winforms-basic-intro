@@ -4,7 +4,7 @@
     End Sub
 
     Private Sub mnuAlta_Click(sender As Object, e As EventArgs) Handles mnuAlta.Click
-        frmPartidos.ShowDialog()
+        frmAlta.ShowDialog()
     End Sub
 
     Private Sub mnuExportar_Click(sender As Object, e As EventArgs) Handles mnuExportar.Click

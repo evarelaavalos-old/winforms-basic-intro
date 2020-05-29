@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class frmPartidos
+Public Class frmAlta
     Private _rutaArchivo As String
     Private _delimitadorCampo As Char
 
