@@ -34,6 +34,8 @@ Public Class frmAlta
         'el usuario no puede tipear equipos personalizados en los combobox
         cmbEquipLocal.DropDownStyle = ComboBoxStyle.DropDownList
         cmbEquipVisitante.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbEquipLocal.Items.Clear()
+        cmbEquipVisitante.Items.Clear()
         CargarEquiposComboBox()
 
         'no se permite escribir más de dos digitos para el numero de goles en los textbox
@@ -43,15 +45,14 @@ Public Class frmAlta
         'configuracion de la lista
         lsvPartidosJugados.View = View.Details
         lsvPartidosJugados.FullRowSelect = True
-        CargarListaDesdeArchivo()
-
-        'columnas de la listview
+        lsvPartidosJugados.Items.Clear()
         lsvPartidosJugados.Columns.Add("Fecha", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Local", 90, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Visitante", 90, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Goles L.", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Goles V.", 60, HorizontalAlignment.Left)
         lsvPartidosJugados.Columns.Add("Finalizacion", 80, HorizontalAlignment.Left)
+        CargarListaDesdeArchivo()
 
     End Sub
 
